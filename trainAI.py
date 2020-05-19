@@ -159,8 +159,8 @@ def eval(genomes, config):
                 networks_list.pop(i)
                 genome_list.pop(i)
 
-        if score >= 50:
-            # Reaching 50 is sufficient to demonstrate a reasonably accurate
+        if score >= 55:
+            # Reaching 55 is sufficient to demonstrate a reasonably accurate
             # model, so we store the model in a .pickle file.
 
             best_model = networks_list[0]
@@ -192,7 +192,7 @@ def run(config_path):
     stats = neat.StatisticsReporter()
     population.add_reporter(stats)
 
-    winner = population.run(eval,10)
+    winner = population.run(eval,15)
     # Run 15 generations at most. This usually results in a very accurate 'checkpoint' model
 
 def main():
