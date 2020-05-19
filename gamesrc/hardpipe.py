@@ -4,6 +4,7 @@ from gamesrc import pipe
 from resources.reference import *
 from gamesrc.pipe import *
 
+
 class HardPipe(Pipe):
     """
     This class represents a complete more difficult Pipe in Flappy Bird.
@@ -20,4 +21,3 @@ class HardPipe(Pipe):
         super().__init__(x)
         self.GAP = 155  # Uses a much smaller gap
         self.set_height()  # Update sprite calculations accordingly
-

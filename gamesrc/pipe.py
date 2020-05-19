@@ -3,6 +3,7 @@ import random
 from resources import reference
 from resources.reference import *
 
+
 class Pipe:
     """
     This class represents a complete Pipe in Flappy Bird including the top and
@@ -33,7 +34,7 @@ class Pipe:
         self.PIPE_TOP = pygame.transform.flip(PIPE_IMAGE, False, True)
         self.PIPE_BOTTOM = PIPE_IMAGE
 
-        self.passed =  False
+        self.passed = False
         self.set_height()
 
     def set_height(self):
@@ -42,10 +43,9 @@ class Pipe:
         the pipe are to be drawn.
         """
         # Where we plan to start drawing the gap
-        self.height = random.randrange(50,450)
+        self.height = random.randrange(50, 450)
         self.top = self.height - self.PIPE_TOP.get_height()
-        self.bottom =  self.height + self.GAP
-
+        self.bottom = self.height + self.GAP
 
     def move(self):
         """
@@ -60,7 +60,7 @@ class Pipe:
 
         Arguments: window -- The window where this object must be drawn
         """
-        window.blit(self.PIPE_TOP, (self.x,self.top))
+        window.blit(self.PIPE_TOP, (self.x, self.top))
         window.blit(self.PIPE_BOTTOM, (self.x, self.bottom))
 
     def collide(self, bird):
@@ -90,4 +90,3 @@ class Pipe:
             return True
         else:
             return False
-

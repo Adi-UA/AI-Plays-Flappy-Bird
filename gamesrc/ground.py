@@ -1,6 +1,7 @@
 from resources import reference
 from resources.reference import *
 
+
 class Ground:
     """
     This class represents the Ground in Flappy Bird. It uses two ground sprites
@@ -14,7 +15,7 @@ class Ground:
     object has moved and where the pair ground object has to be drawn from.
     """
 
-    VEL =5
+    VEL = 5
     WIDTH = GROUND_IMAGE.get_width()
     IMG = GROUND_IMAGE
 
@@ -51,7 +52,5 @@ class Ground:
 
         Arguments: window -- The window where this object must be drawn
         """
-        window.blit(self.IMG, (self.x1,self.y))
-        window.blit(self.IMG, (self.x2,self.y))
-
-
+        window.blit(self.IMG, (self.x1, self.y))
+        window.blit(self.IMG, (self.x2, self.y))
