@@ -4,6 +4,7 @@ import os
 # This file contains all the constants used in this project including the
 # images.
 
+
 def image_reader(directory, filename):
     """
     This function grabs the images from the specified filepath using pygame's
@@ -15,7 +16,12 @@ def image_reader(directory, filename):
 
     Returns: -- The image at the given location
     """
-    return pygame.transform.scale2x(pygame.image.load(os.path.join(directory,filename))).convert()
+    return pygame.transform.scale2x(
+        pygame.image.load(
+            os.path.join(
+                directory,
+                filename))).convert()
+
 
 WIN_WIDTH = 500
 WIN_HEIGHT = 800
@@ -32,10 +38,9 @@ resource_path = os.path.join(os.path.dirname(__file__), "images")
 
 
 BIRD_IMAGES = [image_reader(resource_path, "bird1.png"),
-                image_reader(resource_path, "bird2.png"),
-                image_reader(resource_path, "bird3.png")]
+               image_reader(resource_path, "bird2.png"),
+               image_reader(resource_path, "bird3.png")]
 
 PIPE_IMAGE = image_reader(resource_path, "pipe.png")
 GROUND_IMAGE = image_reader(resource_path, "base.png")
 BKG_IMAGE = image_reader(resource_path, "bg.png")
-

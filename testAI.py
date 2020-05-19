@@ -23,13 +23,15 @@ def draw_window(window, bird, pipes, ground, score):
      score. This score will be equal for all birds since the NNs go through an
      equal number of frames in an equal amount of time.
     """
-    window.blit(BKG_IMAGE, (0,0))
+    window.blit(BKG_IMAGE, (0, 0))
 
     for pipe in pipes:
         pipe.draw(window)
 
-    score_txt = STAT_FONT.render("Score: " + str(score),1,(255,255,255))
-    window.blit(score_txt, (WIN_WIDTH-10-score_txt.get_width(),10))  # top right of screen
+    score_txt = STAT_FONT.render("Score: " + str(score), 1, (255, 255, 255))
+    window.blit(
+        score_txt,
+        (WIN_WIDTH - 10 - score_txt.get_width(), 10))  # top right of screen
 
     ground.draw(window)
 
@@ -49,7 +51,7 @@ def run_model(neural_net):
         neural_net  -- The NN with which the game is supposed to be run
     """
 
-    bird = Bird(230,350)
+    bird = Bird(230, 350)
     ground = Ground(730)
     pipes = [Pipe(700)]  # Starting off with a normal pipe
     score = 0
@@ -73,11 +75,13 @@ def run_model(neural_net):
         pipe_idx = 0
         if len(pipes) > 1:
             if bird.x > pipes[0].x + pipes[0].PIPE_TOP.get_width():
-                pipe_idx =1
+                pipe_idx = 1
 
         # Move the bird and then allow the NN to choose if the bird should jump
         bird.move()
-        output = neural_net.activate((bird.y, abs(bird.y - pipes[pipe_idx].height), abs(bird.y - pipes[pipe_idx].bottom)))
+        output = neural_net.activate((bird.y,
+                                      abs(bird.y - pipes[pipe_idx].height),
+                                      abs(bird.y - pipes[pipe_idx].bottom)))
         if output[0] > 0.5:
             bird.jump()
 
@@ -109,7 +113,6 @@ def run_model(neural_net):
             else:
                 pipes.append(RandomPipe(600))
 
-
         if bird.y + bird.img.get_height() >= 730 or bird.y < 0:
             print("You Lost")
             print("Score: " + str(score))
@@ -123,6 +126,7 @@ def run_model(neural_net):
         ground.move()
         draw_window(WINDOW, bird, pipes, ground, score)
 
+
 def main():
 
     # Load stored NN
@@ -132,6 +136,7 @@ def main():
 
     # Use NN to run Flappy Bird
     run_model(neural_net)
+
 
 if __name__ == "__main__":
     main()

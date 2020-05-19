@@ -25,16 +25,22 @@ def draw_window(window, birds, pipes, ground, score, generation):
      equal number of frames in an equal amount of time.  generation {int} -- The
      current generation number of the NNs.
     """
-    window.blit(BKG_IMAGE, (0,0))
+    window.blit(BKG_IMAGE, (0, 0))
 
     for pipe in pipes:
         pipe.draw(window)
 
-    score_txt = STAT_FONT.render("Score: " + str(score),1,(255,255,255))
-    window.blit(score_txt, (WIN_WIDTH-10-score_txt.get_width(),10))  # top right of screen
+    score_txt = STAT_FONT.render("Score: " + str(score), 1, (255, 255, 255))
+    window.blit(
+        score_txt,
+        (WIN_WIDTH -
+         10 -
+         score_txt.get_width(),
+         10))  # top right of screen
 
-    gen_txt = STAT_FONT.render("Generation: " + str(generation),1,(255,255,255))
-    window.blit(gen_txt, (10,10))  # top left of screen
+    gen_txt = STAT_FONT.render(
+        "Generation: " + str(generation), 1, (255, 255, 255))
+    window.blit(gen_txt, (10, 10))  # top left of screen
 
     ground.draw(window)
 
@@ -70,10 +76,8 @@ def eval(genomes, config):
 
         genome.fitness = 0
 
-        birds.append(Bird(230,350))
+        birds.append(Bird(230, 350))
         genome_list.append(genome)
-
-
 
     ground = Ground(730)
     pipes = [Pipe(700)]  # Starting off with a normal pipe
@@ -98,18 +102,20 @@ def eval(genomes, config):
         if len(birds) > 0:
             if len(pipes) > 1:
                 if birds[0].x > pipes[0].x + pipes[0].PIPE_TOP.get_width():
-                    pipe_idx =1
+                    pipe_idx = 1
         else:
             isRunning = False
             break
 
-        for i,bird in enumerate(birds):
+        for i, bird in enumerate(birds):
             bird.move()
-            genome_list[i].fitness += 0.01  # 'reward' for making it to this frame
+            # 'reward' for making it to this frame
+            genome_list[i].fitness += 0.01
 
             # NN Decision absed its bird's position as well as the position of
             # the top and bottom of the gap in the relevant pipe.
-            output = networks_list[i].activate((bird.y, abs(bird.y - pipes[pipe_idx].height), abs(bird.y - pipes[pipe_idx].bottom)))
+            output = networks_list[i].activate((bird.y, abs(
+                bird.y - pipes[pipe_idx].height), abs(bird.y - pipes[pipe_idx].bottom)))
             if output[0] > 0.6:
                 bird.jump()
 
@@ -120,7 +126,7 @@ def eval(genomes, config):
                 if pipe.collide(bird):
                     # The bird died so we subtract fitness from the genome and
                     # remove its controlling genome and NN from the lists.
-                    genome_list[i].fitness -=1
+                    genome_list[i].fitness -= 1
                     birds.pop(i)
                     networks_list.pop(i)
                     genome_list.pop(i)
@@ -173,7 +179,6 @@ def eval(genomes, config):
         draw_window(WINDOW, birds, pipes, ground, score, GEN_NO)
 
 
-
 def run(config_path):
     """
     This function runs each generation of NNs using the configuration file
@@ -183,8 +188,8 @@ def run(config_path):
         config_path  -- Path to the NNs config file
     """
     config = neat.config.Config(neat.DefaultGenome, neat.DefaultReproduction,
-                         neat.DefaultSpeciesSet, neat.DefaultStagnation,
-                         config_path)
+                                neat.DefaultSpeciesSet, neat.DefaultStagnation,
+                                config_path)
 
     population = neat.Population(config)  # Population of NNs
     population.add_reporter(neat.StdOutReporter(True))
@@ -192,12 +197,14 @@ def run(config_path):
     stats = neat.StatisticsReporter()
     population.add_reporter(stats)
 
-    winner = population.run(eval,15)
-    # Run 15 generations at most. This usually results in a very accurate 'checkpoint' model
+    winner = population.run(eval, 15)
+    # Run 15 generations at most. This usually results in a very accurate
+    # 'checkpoint' model
+
 
 def main():
     local_dir = os.path.dirname(__file__)
-    config_path = os.path.join(local_dir, "resources\config-feedforward.txt")
+    config_path = os.path.join(local_dir, r"resources\config-feedforward.txt")
     run(config_path)
 
     # Once the model is trained and a best model has been generated, the user
@@ -213,6 +220,6 @@ def main():
         else:
             print("Not a valid choice")
 
+
 if __name__ == "__main__":
     main()
-

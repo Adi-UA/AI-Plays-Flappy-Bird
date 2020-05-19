@@ -5,6 +5,7 @@ from gamesrc import pipe
 from resources.reference import *
 from gamesrc.pipe import Pipe
 
+
 class RandomPipe(Pipe):
     """
     This class represents a complete random Pipe in Flappy Bird. Its gap sizes
@@ -23,4 +24,3 @@ class RandomPipe(Pipe):
         super().__init__(x)
         self.GAP = random.randrange(155, 190)
         self.set_height()
-
